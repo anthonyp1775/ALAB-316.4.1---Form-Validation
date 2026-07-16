@@ -70,6 +70,12 @@ registrationForm.addEventListener("submit", function (event) {
     }
   }
  
+  const users = getUsers();
+  if (usernameValue !== "" && users[usernameValue.toLowerCase()]) {
+    errors.push("That username is already taken.");
+    focusTarget = focusTarget || username;
+  }
+ 
 
  
 
