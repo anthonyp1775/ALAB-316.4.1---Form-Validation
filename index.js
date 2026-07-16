@@ -50,6 +50,26 @@ registrationForm.addEventListener("submit", function (event) {
   const errors = [];
   let focusTarget = null;
  
+  if (usernameValue === "") {
+    errors.push("The username cannot be blank.");
+    focusTarget = focusTarget || username;
+  } else {
+    if (usernameValue.length < 4) {
+      errors.push("The username must be at least four characters long.");
+      focusTarget = focusTarget || username;
+    }
+    if (new Set(usernameValue.toLowerCase()).size < 2) {
+      errors.push("The username must contain at least two unique characters.");
+      focusTarget = focusTarget || username;
+    }
+    if (!/^[a-zA-Z0-9]+$/.test(usernameValue)) {
+      errors.push(
+        "The username cannot contain any special characters or whitespace."
+      );
+      focusTarget = focusTarget || username;
+    }
+  }
+ 
 
  
 
