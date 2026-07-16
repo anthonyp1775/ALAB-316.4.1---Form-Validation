@@ -85,6 +85,20 @@ registrationForm.addEventListener("submit", function (event) {
     focusTarget = focusTarget || email;
   }
  
+  if (passwordValue.length < 12) {
+    errors.push("Passwords must be at least 12 characters long.");
+    focusTarget = focusTarget || password;
+  }
+  if (!/[A-Z]/.test(passwordValue) || !/[a-z]/.test(passwordValue)) {
+    errors.push(
+      "Passwords must have at least one uppercase and one lowercase letter."
+    );
+    focusTarget = focusTarget || password;
+  }
+  if (!/[0-9]/.test(passwordValue)) {
+    errors.push("Passwords must contain at least one number.");
+    focusTarget = focusTarget || password;
+  }
  
  
 
