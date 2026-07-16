@@ -76,6 +76,15 @@ registrationForm.addEventListener("submit", function (event) {
     focusTarget = focusTarget || username;
   }
  
-
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailPattern.test(emailValue)) {
+    errors.push("The email must be a valid email address.");
+    focusTarget = focusTarget || email;
+  } else if (emailValue.toLowerCase().endsWith("@example.com")) {
+    errors.push('The email must not be from the domain "example.com."');
+    focusTarget = focusTarget || email;
+  }
+ 
+ 
  
 
