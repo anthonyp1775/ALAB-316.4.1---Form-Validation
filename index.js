@@ -99,6 +99,52 @@ registrationForm.addEventListener("submit", function (event) {
     errors.push("Passwords must contain at least one number.");
     focusTarget = focusTarget || password;
   }
+  if (!/[^a-zA-Z0-9]/.test(passwordValue)) {
+    errors.push("Passwords must contain at least one special character.");
+    focusTarget = focusTarget || password;
+  }
+  if (passwordValue.toLowerCase().includes("password")) {
+    errors.push('Passwords cannot contain the word "password".');
+    focusTarget = focusTarget || password;
+  }
+  if (
+    usernameValue !== "" &&
+    passwordValue.toLowerCase().includes(usernameValue.toLowerCase())
+  ) {
+    errors.push("Passwords cannot contain the username.");
+    focusTarget = focusTarget || password;
+  }
+  if (passwordValue !== passwordCheckValue) {
+    errors.push("Both passwords must match.");
+    focusTarget = focusTarget || passwordCheck;
+  }
  
+  if (!terms.checked) {
+    errors.push("The terms and conditions must be accepted.");
+    focusTarget = focusTarget || terms;
+  }
  
-
+  if (errors.length > 0) {
+    showErrors(errors, focusTarget);
+    return;
+  }
+ 
+  users[usernameValue.toLowerCase()] = {
+    username: usernameValue.toLowerCase(),
+    email: emailValue.toLowerCase(),
+    password: passwordValue,
+  };
+  saveUsers(users);
+ 
+  registrationForm.reset();
+  showSuccess("Registration successful!");
+});
+ 
+loginForm.addEventListener("submit", function (event) {
+  event.preventDefault();
+  hideErrors();
+ 
+  const username = loginForm.elements["username"];
+  const password = loginForm.elements["password"];
+  const persist = loginForm.elements["persist"];
+})
