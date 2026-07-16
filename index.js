@@ -1,19 +1,55 @@
-    const registration = document.querySelector("#registration")
-    if (registration) {
-    registration.addEventListener("submit", function(event){
-    event.preventDefault();
+    const registrationForm = document.getElementById("registration");
+const loginForm = document.getElementById("login");
+const errorDisplay = document.getElementById("errorDisplay");
+ 
+function showErrors(errors, focusElement) {
+  errorDisplay.innerHTML = errors.map((e) => `<div>${e}</div>`).join("");
+  errorDisplay.style.display = "flex";
+  errorDisplay.style.flexDirection = "column";
+  if (focusElement) focusElement.focus();
+}
+ 
+function showSuccess(message) {
+  errorDisplay.innerHTML = `<div style="color: green;">${message}</div>`;
+  errorDisplay.style.background = "#cfc";
+  errorDisplay.style.display = "flex";
+  setTimeout(() => {
+    errorDisplay.style.display = "none";
+    errorDisplay.style.background = "#fcc";
+  }, 4000);
+}
+ 
+function hideErrors() {
+  errorDisplay.style.display = "none";
+  errorDisplay.innerHTML = "";
+}
+ 
+function getUsers() {
+  return JSON.parse(localStorage.getItem("users")) || {};
+}
+ 
+function saveUsers(users) {
+  localStorage.setItem("users", JSON.stringify(users));
+}
+ 
+registrationForm.addEventListener("submit", function (event) {
+  event.preventDefault();
+  hideErrors();
+ 
+  const username = registrationForm.elements["username"];
+  const email = registrationForm.elements["email"];
+  const password = registrationForm.elements["password"];
+  const passwordCheck = registrationForm.elements["passwordCheck"];
+  const terms = registrationForm.elements["terms"];
+ 
+  const usernameValue = username.value.trim();
+  const emailValue = email.value.trim();
+  const passwordValue = password.value;
+  const passwordCheckValue = passwordCheck.value;
+ 
+  const errors = [];
+  let focusTarget = null;
+ 
 
-    const formData = {
-        name: document.getElementById("username").value,
-        email: document.getElementById("email").value,
-        password: document.getElementById("password").value,
-        passwordcheck: document.getElementById("passwordCheck").value,
-    }});
-    }
+ 
 
-        if (formData.password !== formData.passwordcheck) {
-      alert("Passwords do not match!");
-      return;
-    }
-
-    console.log("Form Submitted Successfully:", formData);
